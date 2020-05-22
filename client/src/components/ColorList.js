@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { authenticatedAxios } from '../utils/authenticAxios';
 import { useHistory } from 'react-router-dom';
 import AddColors from './AddColors';
 
-const ColorList = ({ colors, updateColors, getData }) => {
+const ColorList = ({ colors, updateColors }) => {
     console.log(colors);
     const initialColor = {
         color: '',
@@ -112,7 +111,10 @@ const ColorList = ({ colors, updateColors, getData }) => {
                     </div>
                 </form>
             )}
-            <AddColors initialColor={initialColor} />
+            <AddColors
+                initialColor={initialColor}
+                updateColors={updateColors}
+            />
             <div className="spacer" />
             {/* stretch - build another form here to add a color */}
         </div>

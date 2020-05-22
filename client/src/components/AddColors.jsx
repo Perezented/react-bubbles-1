@@ -2,13 +2,15 @@ import React from 'react';
 import { useState } from 'react';
 import { authenticatedAxios } from '../utils/authenticAxios';
 
-const AddColors = ({ initialColor }) => {
+const AddColors = ({ initialColor, updateColors }) => {
     const [newColor, setNewColor] = useState(initialColor);
     function addColor() {
         authenticatedAxios()
             .post(`/api/colors`, newColor)
             .then((res) => {
                 console.log(res.data);
+                updateColors(res.data);
+                setNewColor(initialColor);
             })
             .catch((err) => {
                 console.log(err);
