@@ -1,7 +1,5 @@
-// make a post request to retrieve a token from the api
-// when you have handled the token, navigate to the BubblePage route
 import React from 'react';
-import { authenticatedAxios } from '../utils/authenticatedAxios';
+import { authenticatedAxios } from '../utils/authenticAxios';
 
 class Login extends React.Component {
     state = {
@@ -31,11 +29,14 @@ class Login extends React.Component {
             })
             .catch((err) => console.log(err));
     };
+    // make a post request to retrieve a token from the api
+    // when you have handled the token, navigate to the BubblePage route
 
     render() {
         return (
-            <div>
-                <br />
+            <>
+                <h1>Welcome to the Bubble App!</h1>
+
                 <form onSubmit={this.login}>
                     <input
                         type="text"
@@ -53,7 +54,7 @@ class Login extends React.Component {
                     />
                     <button>Log in</button>
                 </form>
-            </div>
+            </>
         );
     }
 }
