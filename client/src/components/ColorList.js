@@ -3,31 +3,34 @@ import axios from 'axios';
 import { authenticatedAxios } from '../utils/authenticAxios';
 import { useHistory } from 'react-router-dom';
 
-const initialColor = {
-    color: '',
-    code: { hex: '' },
-};
-
 const ColorList = ({ colors, updateColors, getData }) => {
     console.log(colors);
+    const initialColor = {
+        color: '',
+        code: { hex: '' },
+    };
+
     const [editing, setEditing] = useState(false);
-    const [colorToEdit, setColorToEdit] = useState(initialColor);
+    const [updatedColor, setColorToEdit] = useState(initialColor);
     const { push } = useHistory();
 
     const editColor = (color) => {
         setEditing(true);
         setColorToEdit(color);
     };
-    console.log(colorToEdit);
+    console.log(updatedColor);
     const saveEdit = (e) => {
         e.preventDefault();
         // Make a put request to save your updated color
         // think about where will you get the id from...
         // where is is saved right now?
         authenticatedAxios()
-            .put(`/api/colors/${colorToEdit.id}`)
+            .put(`/api/colors/${updatedColor.id}`, updatedColor)
             .then((res) => {
                 console.log(res);
+                setColorToEdit(res.data);
+                push('/load');
+                push('/bubblePage');
             })
             .catch((err) => {
                 console.log(err);
@@ -81,11 +84,11 @@ const ColorList = ({ colors, updateColors, getData }) => {
                         <input
                             onChange={(e) =>
                                 setColorToEdit({
-                                    ...colorToEdit,
+                                    ...updatedColor,
                                     color: e.target.value,
                                 })
                             }
-                            value={colorToEdit.color}
+                            value={updatedColor.color}
                         />
                     </label>
                     <label>
@@ -93,11 +96,11 @@ const ColorList = ({ colors, updateColors, getData }) => {
                         <input
                             onChange={(e) =>
                                 setColorToEdit({
-                                    ...colorToEdit,
+                                    ...updatedColor,
                                     code: { hex: e.target.value },
                                 })
                             }
-                            value={colorToEdit.code.hex}
+                            value={updatedColor.code.hex}
                         />
                     </label>
                     <div className="button-row">
